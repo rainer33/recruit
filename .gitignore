@@ -1,0 +1,10 @@
+.DS_Store
+extracted_text/
+old/
+*.doc
+*.docx
+*.pdf
+*.xls
+*.xlsx
+~$*
+!README.md
