@@ -47,7 +47,7 @@
             설계, 개발, 데이터 표준화와 품질 개선을 수행해왔습니다.
           </p>
           <div class="hero-actions">
-            <a class="primary-action" href="mailto:rainer33@naver.com" data-i18n="heroContact">메일 바로 보내기</a>
+            <a class="primary-action" href="#contact" data-i18n="heroContact">메일 보내기</a>
             <a class="secondary-action" href="#projects" data-i18n="heroDownload">대표 프로젝트 보기</a>
           </div>
           <dl class="metrics" aria-label="Career highlights">
@@ -176,12 +176,26 @@
           <p class="eyebrow" data-i18n="contactEyebrow">Contact</p>
           <h2 data-i18n="contactTitle">프로젝트와 포지션 제안을 메일로 보내주세요.</h2>
         </div>
-        <div class="contact-panel">
-          <p data-i18n="contactBody">
-            버튼을 누르면 기본 메일 앱에서 rainer33@naver.com 앞으로 바로 작성 화면이 열립니다.
-          </p>
-          <a class="primary-action" href="mailto:rainer33@naver.com" data-i18n="formSubmit">rainer33@naver.com</a>
-        </div>
+        <form class="contact-form" id="contactForm">
+          <label>
+            <span data-i18n="formName">보내는 사람</span>
+            <input id="senderName" name="name" autocomplete="name" required />
+          </label>
+          <label>
+            <span data-i18n="formEmail">보내는 사람 이메일</span>
+            <input id="senderEmail" name="email" type="email" autocomplete="email" required />
+          </label>
+          <label>
+            <span data-i18n="formSubject">제목</span>
+            <input id="subject" name="subject" required />
+          </label>
+          <label>
+            <span data-i18n="formMessage">내용</span>
+            <textarea id="message" name="message" rows="6" required></textarea>
+          </label>
+          <button class="primary-action" id="sendButton" type="submit" data-i18n="formSubmit">메일 보내기</button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
       </section>
     </main>
 

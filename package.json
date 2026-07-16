@@ -1,0 +1,16 @@
+{
+  "name": "min-jahong-resume-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "vercel dev",
+    "check": "node --check script.js && node --check api/contact.js"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.16"
+  },
+  "devDependencies": {
+    "vercel": "^37.14.0"
+  }
+}

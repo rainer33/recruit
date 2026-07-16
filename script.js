@@ -10,7 +10,7 @@ const translations = {
     heroTitle: "복잡한 업무와 데이터 흐름을 운영 가능한 시스템으로 설계합니다.",
     heroText:
       "18년 이상의 SI 개발 경험을 바탕으로 제조, 공공, 데이터 플랫폼 프로젝트에서 분석, 설계, 개발, 데이터 표준화와 품질 개선을 수행해왔습니다.",
-    heroContact: "메일 바로 보내기",
+    heroContact: "메일 보내기",
     heroDownload: "대표 프로젝트 보기",
     metricYears: "Years Experience",
     metricProjects: "Major Projects",
@@ -50,8 +50,15 @@ const translations = {
     skillGroup3: "Frontend & Ops",
     contactEyebrow: "Contact",
     contactTitle: "프로젝트와 포지션 제안을 메일로 보내주세요.",
-    contactBody: "버튼을 누르면 기본 메일 앱에서 rainer33@naver.com 앞으로 바로 작성 화면이 열립니다.",
-    formSubmit: "rainer33@naver.com",
+    formName: "보내는 사람",
+    formEmail: "보내는 사람 이메일",
+    formSubject: "제목",
+    formMessage: "내용",
+    formSubmit: "메일 보내기",
+    formSending: "메일을 보내는 중입니다...",
+    formSuccess: "메일이 발송되었습니다.",
+    formError: "메일 발송에 실패했습니다. 잠시 후 다시 시도해주세요.",
+    formServerMissing: "메일 서버가 아직 배포되지 않았습니다.",
     footerText: "Built for GitHub Pages.",
   },
   en: {
@@ -65,7 +72,7 @@ const translations = {
     heroTitle: "I turn complex business and data flows into systems that can run in production.",
     heroText:
       "With 18+ years of SI experience, I work across manufacturing, public-sector, and data-platform projects, covering analysis, design, development, data standardization, and quality improvement.",
-    heroContact: "Email Directly",
+    heroContact: "Send Email",
     heroDownload: "View Projects",
     metricYears: "Years Experience",
     metricProjects: "Major Projects",
@@ -109,8 +116,15 @@ const translations = {
     skillGroup3: "Frontend & Ops",
     contactEyebrow: "Contact",
     contactTitle: "Send project and position opportunities by email.",
-    contactBody: "Tap the button to open your default mail app directly addressed to rainer33@naver.com.",
-    formSubmit: "rainer33@naver.com",
+    formName: "Sender name",
+    formEmail: "Sender email",
+    formSubject: "Subject",
+    formMessage: "Message",
+    formSubmit: "Send Email",
+    formSending: "Sending email...",
+    formSuccess: "Email sent.",
+    formError: "Email failed. Please try again later.",
+    formServerMissing: "The email server has not been deployed yet.",
     footerText: "Built for GitHub Pages.",
   },
 };
@@ -129,6 +143,51 @@ function setLanguage(lang) {
 
 document.querySelectorAll(".lang-btn").forEach((button) => {
   button.addEventListener("click", () => setLanguage(button.dataset.lang));
+});
+
+document.getElementById("contactForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const lang = localStorage.getItem("resume-lang") || "ko";
+  const status = document.getElementById("formStatus");
+  const button = document.getElementById("sendButton");
+  const payload = {
+    name: document.getElementById("senderName").value.trim(),
+    email: document.getElementById("senderEmail").value.trim(),
+    subject: document.getElementById("subject").value.trim(),
+    message: document.getElementById("message").value.trim(),
+  };
+
+  status.dataset.state = "pending";
+  status.textContent = translations[lang].formSending;
+  button.disabled = true;
+
+  try {
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (response.status === 404) {
+      throw new Error("server_missing");
+    }
+
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || !result.ok) {
+      throw new Error(result.error || "send_failed");
+    }
+
+    event.target.reset();
+    status.dataset.state = "success";
+    status.textContent = translations[lang].formSuccess;
+  } catch (error) {
+    status.dataset.state = "error";
+    status.textContent =
+      error.message === "server_missing" ? translations[lang].formServerMissing : translations[lang].formError;
+  } finally {
+    button.disabled = false;
+  }
 });
 
 document.getElementById("year").textContent = new Date().getFullYear();
