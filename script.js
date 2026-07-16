@@ -10,7 +10,7 @@ const translations = {
     heroTitle: "복잡한 업무와 데이터 흐름을 운영 가능한 시스템으로 설계합니다.",
     heroText:
       "18년 이상의 SI 개발 경험을 바탕으로 제조, 공공, 데이터 플랫폼 프로젝트에서 분석, 설계, 개발, 데이터 표준화와 품질 개선을 수행해왔습니다.",
-    heroContact: "메일 보내기",
+    heroContact: "메일 바로 보내기",
     heroDownload: "대표 프로젝트 보기",
     metricYears: "Years Experience",
     metricProjects: "Major Projects",
@@ -50,11 +50,8 @@ const translations = {
     skillGroup3: "Frontend & Ops",
     contactEyebrow: "Contact",
     contactTitle: "프로젝트와 포지션 제안을 메일로 보내주세요.",
-    formName: "이름",
-    formEmail: "회신 이메일",
-    formMessage: "메시지",
-    formSubmit: "메일 앱 열기",
-    formNote: "버튼을 누르면 기본 메일 앱에서 rainer33@naver.com 앞으로 작성 화면이 열립니다.",
+    contactBody: "버튼을 누르면 기본 메일 앱에서 rainer33@naver.com 앞으로 바로 작성 화면이 열립니다.",
+    formSubmit: "rainer33@naver.com",
     footerText: "Built for GitHub Pages.",
   },
   en: {
@@ -68,7 +65,7 @@ const translations = {
     heroTitle: "I turn complex business and data flows into systems that can run in production.",
     heroText:
       "With 18+ years of SI experience, I work across manufacturing, public-sector, and data-platform projects, covering analysis, design, development, data standardization, and quality improvement.",
-    heroContact: "Send Email",
+    heroContact: "Email Directly",
     heroDownload: "View Projects",
     metricYears: "Years Experience",
     metricProjects: "Major Projects",
@@ -112,16 +109,11 @@ const translations = {
     skillGroup3: "Frontend & Ops",
     contactEyebrow: "Contact",
     contactTitle: "Send project and position opportunities by email.",
-    formName: "Name",
-    formEmail: "Reply email",
-    formMessage: "Message",
-    formSubmit: "Open Mail App",
-    formNote: "This opens your default mail app with a message addressed to rainer33@naver.com.",
+    contactBody: "Tap the button to open your default mail app directly addressed to rainer33@naver.com.",
+    formSubmit: "rainer33@naver.com",
     footerText: "Built for GitHub Pages.",
   },
 };
-
-const emailAddress = "rainer33@naver.com";
 
 function setLanguage(lang) {
   document.documentElement.lang = lang;
@@ -137,16 +129,6 @@ function setLanguage(lang) {
 
 document.querySelectorAll(".lang-btn").forEach((button) => {
   button.addEventListener("click", () => setLanguage(button.dataset.lang));
-});
-
-document.getElementById("contactForm").addEventListener("submit", (event) => {
-  event.preventDefault();
-  const name = document.getElementById("senderName").value.trim();
-  const replyEmail = document.getElementById("senderEmail").value.trim();
-  const message = document.getElementById("message").value.trim();
-  const subject = encodeURIComponent(`[Resume Site] Contact from ${name}`);
-  const body = encodeURIComponent(`${message}\n\nFrom: ${name}\nReply email: ${replyEmail}`);
-  window.location.href = `mailto:${emailAddress}?subject=${subject}&body=${body}`;
 });
 
 document.getElementById("year").textContent = new Date().getFullYear();
